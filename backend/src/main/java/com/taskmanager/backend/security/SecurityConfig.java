@@ -27,10 +27,16 @@ public class SecurityConfig {
             .cors(cors -> {})
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
+            
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/auth/register",
+                    "/auth/login"
+                ).permitAll()
                 .anyRequest().denyAll()
             )
+
             .build();
     }
 

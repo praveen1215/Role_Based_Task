@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { registerUser } from "../services/authService";
-
+import { Link } from "react-router-dom";
 function Register() {
   const [form, setForm] = useState({
     name: "",
@@ -90,6 +89,12 @@ function Register() {
         <button type="submit" disabled={loading}>
           {loading ? "Registering..." : "Register"}
         </button>
+        
+        <p>
+          Already have an account?{" "}
+          <Link to="/login">Login</Link>
+        </p>
+
       </form>
     </div>
   );

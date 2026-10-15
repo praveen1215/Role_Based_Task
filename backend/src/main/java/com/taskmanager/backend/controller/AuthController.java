@@ -8,6 +8,11 @@ import jakarta.validation.Valid;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import com.taskmanager.backend.dto.LoginRequest;
+import com.taskmanager.backend.dto.LoginResponse;
+import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -26,4 +31,14 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
+@PostMapping("/login")
+public ResponseEntity<LoginResponse> login(
+        @Valid @RequestBody LoginRequest request
+) {
+    LoginResponse response = authService.login(request);
+
+    return ResponseEntity.ok(response);
+}
+
 }
