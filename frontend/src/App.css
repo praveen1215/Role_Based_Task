@@ -30,6 +30,7 @@ body {
 .register-card h1,
 .register-card > p {
   text-align: center;
+  color:#111112
 }
 
 .register-card label {
