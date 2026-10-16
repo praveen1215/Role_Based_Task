@@ -250,3 +250,49 @@ body {
 .admin-tabs + .dashboard-content {
   margin-top: 20px;
 }
+
+
+
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 12px;
+}
+
+.admin-filters input,
+.admin-filters select {
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgb(74, 72, 72);
+}
+
+.admin-filters input {
+  flex: 2;
+  min-width: 200px;
+}
+
+.admin-filters select {
+  flex: 1;
+  min-width: 140px;
+}
+
+.admin-filters button {
+  padding: 11px 18px;
+  border: 1px solid #f2f1f1;
+  border-radius: 8px;
+  background: #ea5a5a;
+  cursor: pointer;
+}
+
+.admin-filters button:hover {
+  background: #ff0000;
+}
+
+.filter-count {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 15px;
+}

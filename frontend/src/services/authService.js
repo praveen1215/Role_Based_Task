@@ -20,7 +20,7 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(credentials) {
-  const response = await fetch(`${API_URL}/auth/login`, {
+  const response = await fetch("http://localhost:8080/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,11 +28,16 @@ export async function loginUser(credentials) {
     body: JSON.stringify(credentials),
   });
 
-  const data = await response.json();
+  if (response.status === 401) {
+    throw new Error("Invalid email or password.");
+  }
 
   if (!response.ok) {
-    throw new Error(data.message || "Login failed");
+    throw new Error("Login failed. Please try again.");
   }
+
+  const data = await response.json();
 
   return data;
 }
+
