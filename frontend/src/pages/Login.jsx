@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { loginUser } from "../services/authService";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -27,16 +29,25 @@ function Login() {
     setError("");
     setLoading(true);
 
-    try {
-      await loginUser(form);
-      // We will add token handling and navigation
-      // when implementing the backend login feature.
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+try {
+  const data = await loginUser(form);
+
+  sessionStorage.setItem("token", data.token);
+  sessionStorage.setItem("role", data.role);
+  sessionStorage.setItem("name", data.name);
+
+  if (data.role === "USER") {
+    navigate("/dashboard");
+  } else {
+    // Admin dashboard will be implemented next.
+    setError("Admin dashboard is not ready yet.");
   }
+} catch (err) {
+  setError(err.message);
+} finally {
+  setLoading(false);
+}
+}
 
   return (
     <div className="register-page">
