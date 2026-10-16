@@ -45,5 +45,25 @@ public class User {
     public String getPasswordHash() {
     return passwordHash;
     }
+    
+    
+public static User createAdmin(
+        String name,
+        String email,
+        String passwordHash
+) {
+    User admin = new User(name, email, passwordHash);
+    admin.role = "ADMIN";
+    return admin;
+}
+
+public void setRole(String role) {
+    if (!"USER".equals(role) && !"ADMIN".equals(role)) {
+        throw new IllegalArgumentException("Invalid user role");
+    }
+
+    this.role = role;
+}
+
 
 }
