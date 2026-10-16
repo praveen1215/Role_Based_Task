@@ -29,6 +29,7 @@ function Login() {
     setError("");
     setLoading(true);
 
+
 try {
   const data = await loginUser(form);
 
@@ -36,11 +37,13 @@ try {
   sessionStorage.setItem("role", data.role);
   sessionStorage.setItem("name", data.name);
 
-  if (data.role === "USER") {
-    navigate("/dashboard");
+  if (data.role === "ADMIN") {
+    navigate("/admin/dashboard", { replace: true });
+  } else if (data.role === "USER") {
+    navigate("/dashboard", { replace: true });
   } else {
-    // Admin dashboard will be implemented next.
-    setError("Admin dashboard is not ready yet.");
+    sessionStorage.clear();
+    setError("Unknown user role.");
   }
 } catch (err) {
   setError(err.message);

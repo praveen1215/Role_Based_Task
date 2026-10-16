@@ -7,6 +7,7 @@ import com.taskmanager.backend.entity.Task;
 import com.taskmanager.backend.entity.User;
 import com.taskmanager.backend.repository.TaskRepository;
 import com.taskmanager.backend.repository.UserRepository;
+import com.taskmanager.backend.dto.AdminTaskRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -135,4 +136,68 @@ public class TaskService {
 
         taskRepository.delete(task);
     }
+
+
+
+// ADMIN: View all tasks
+public List<TaskResponse> getAllTasks() {
+    return taskRepository.findAll()
+            .stream()
+            .map(this::toResponse)
+            .toList();
+}
+
+// ADMIN: Create and assign a task
+public TaskResponse createAdminTask(AdminTaskRequest request) {
+    User owner = userRepository.findById(request.ownerId())
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "User not found"
+            ));
+
+    Task task = new Task();
+
+    task.setTitle(request.title().trim());
+    task.setDescription(request.description());
+    task.setStatus(request.status());
+    task.setPriority(request.priority());
+    task.setDueDate(request.dueDate());
+    task.setOwner(owner);
+
+    return toResponse(taskRepository.save(task));
+}
+
+// ADMIN: Edit any task or reassign it
+public TaskResponse updateAdminTask(
+        Long id,
+        AdminTaskRequest request
+) {
+    Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Task not found"
+            ));
+
+    User owner = userRepository.findById(request.ownerId())
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "User not found"
+            ));
+
+    task.setTitle(request.title().trim());
+    task.setDescription(request.description());
+    task.setStatus(request.status());
+    task.setPriority(request.priority());
+    task.setDueDate(request.dueDate());
+    task.setOwner(owner);
+
+    return toResponse(taskRepository.save(task));
+}
+
+// ADMIN: Delete any task
+public void deleteAdminTask(Long id) {
+    Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Task not found"
+            ));
+
+    taskRepository.delete(task);
+}
 }

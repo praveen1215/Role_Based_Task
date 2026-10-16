@@ -225,3 +225,28 @@ body {
     flex-wrap: wrap;
   }
 }
+
+/*admin dashboard styles*/
+
+.admin-tabs {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.admin-tabs button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.admin-tabs button:hover {
+  background: #1d4ed8;
+}
+
+.admin-tabs + .dashboard-content {
+  margin-top: 20px;
+}
